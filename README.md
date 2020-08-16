@@ -7,6 +7,10 @@ also copy the dlv binary (which is linked statically) out of the container into
 the to-be-debugged container, e.g. if you use this image in a K8s
 InitContainer.
 
+There are two images built from this source: delve and delve-sumo. The former
+contains only dlv (in a alpine base image, ~25 MB), the latter also contains
+telepresence, kubectl and other random debugging utils (~950 MB).
+
 IMPORTANT: You need to run the container with `--security-opt
 seccomp:unconfined`. Otherwise Delve will abort with `could not launch
 process: fork/exec <binary>: operation not permitted`.

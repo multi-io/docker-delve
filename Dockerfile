@@ -5,7 +5,15 @@ RUN git clone https://github.com/go-delve/delve.git /go/src/github.com/go-delve/
     git checkout ${DLV_VERSION} && \
     go install -ldflags "-X main.Build=$(git rev-parse HEAD) -extldflags \"-fno-PIC -static\"" -buildmode pie -tags 'osusergo netgo static_build' github.com/go-delve/delve/cmd/dlv
 
-FROM golang:1.14.3
+
+FROM alpine:latest AS minimal
+
+COPY --from=builder /go/bin/dlv /usr/bin/
+
+ENTRYPOINT ["/usr/bin/dlv"]
+
+
+FROM golang:1.14.3 AS sumo
 
 COPY --from=builder /go/bin/dlv /usr/bin/
 
