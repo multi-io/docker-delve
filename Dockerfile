@@ -1,4 +1,4 @@
-FROM golang:1.14.3 AS builder
+FROM golang:1.21.2 AS builder
 
 RUN git clone https://github.com/go-delve/delve.git /go/src/github.com/go-delve/delve && \
     cd /go/src/github.com/go-delve/delve && \
@@ -13,18 +13,11 @@ COPY --from=builder /go/bin/dlv /usr/bin/
 ENTRYPOINT ["/usr/bin/dlv"]
 
 
-FROM golang:1.14.3 AS sumo
+FROM golang:1.21.2 AS sumo
 
 COPY --from=builder /go/bin/dlv /usr/bin/
 
-RUN curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.deb.sh | bash && \
-    apt install -y --no-install-recommends telepresence && \
-    apt-get update && apt-get install -y apt-transport-https && \
-    curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    touch /etc/apt/sources.list.d/kubernetes.list  && \
-    echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list && \
-    apt-get update && \
-    apt-get install -y kubectl && \
-    apt-get clean
+RUN curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl && \
+    chmod +x /usr/local/bin/kubectl
+# curl -fL https://app.getambassador.io/download/tel2oss/releases/download/v2.17.1/telepresence-linux-amd64 -o /usr/local/bin/telepresence # 404
 
-ENTRYPOINT ["/usr/bin/dlv"]

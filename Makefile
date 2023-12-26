@@ -1,5 +1,5 @@
 # git version to check out and build
-DLV_VERSION=v1.5.0
+DLV_VERSION=v1.21.2
 
 TAG=$(DLV_VERSION)
 
