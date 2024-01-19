@@ -1,4 +1,3 @@
-# git version to check out and build
 DLV_VERSION=v1.21.2
 
 TAG=$(DLV_VERSION)
@@ -7,10 +6,10 @@ MIN_IMAGE=oklischat/delve:$(TAG)
 SUMO_IMAGE=oklischat/delve-sumo:$(TAG)
 
 build-min:
-	docker build --target minimal --build-arg DLV_VERSION --tag $(MIN_IMAGE) .
+	docker build --target minimal --build-arg DLV_VERSION=$(DLV_VERSION) --tag $(MIN_IMAGE) .
 
 build-sumo:
-	docker build --target sumo --build-arg DLV_VERSION --tag $(SUMO_IMAGE) .
+	docker build --target sumo --build-arg DLV_VERSION=$(DLV_VERSION) --tag $(SUMO_IMAGE) .
 
 build-all: build-min build-sumo
 

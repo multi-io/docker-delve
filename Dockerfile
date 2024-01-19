@@ -1,10 +1,8 @@
 FROM golang:1.21.2 AS builder
 
-RUN git clone https://github.com/go-delve/delve.git /go/src/github.com/go-delve/delve && \
-    cd /go/src/github.com/go-delve/delve && \
-    git checkout ${DLV_VERSION} && \
-    go install -ldflags "-X main.Build=$(git rev-parse HEAD) -extldflags \"-fno-PIC -static\"" -buildmode pie -tags 'osusergo netgo static_build' github.com/go-delve/delve/cmd/dlv
+ARG DLV_VERSION
 
+RUN CGO_ENABLED=0 go install -ldflags "-w -extldflags '-static'" github.com/go-delve/delve/cmd/dlv@${DLV_VERSION}
 
 FROM alpine:latest AS minimal
 
