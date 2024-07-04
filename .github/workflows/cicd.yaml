@@ -1,7 +1,7 @@
 name: Publish docker image
 on:
   push:
-  pull_request:
+    branches: master
 jobs:
 
   publish:
