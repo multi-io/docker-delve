@@ -1,6 +1,6 @@
 DLV_VERSION=v1.21.2
 
-TAG=$(DLV_VERSION)-debug1
+TAG=$(DLV_VERSION)-multiarch-debug
 
 ARCHS=linux/arm64,linux/amd64
 
