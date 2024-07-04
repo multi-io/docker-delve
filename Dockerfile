@@ -1,6 +1,6 @@
-FROM golang:1.21.2 AS builder
-
 ARG DLV_VERSION
+
+FROM golang:${DLV_VERSION} AS builder
 
 RUN CGO_ENABLED=0 go install -ldflags "-w -extldflags '-static'" github.com/go-delve/delve/cmd/dlv@${DLV_VERSION}
 
@@ -11,7 +11,7 @@ COPY --from=builder /go/bin/dlv /usr/bin/
 ENTRYPOINT ["/usr/bin/dlv"]
 
 
-FROM golang:1.21.2 AS sumo
+FROM golang:${DLV_VERSION} AS sumo
 
 COPY --from=builder /go/bin/dlv /usr/bin/
 

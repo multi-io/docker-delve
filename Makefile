@@ -1,6 +1,6 @@
-DLV_VERSION=v1.21.2
+DLV_VERSION ?= 1.21.2
 
-TAG=$(DLV_VERSION)
+TAG=v$(DLV_VERSION)
 
 ARCHS=linux/arm64,linux/amd64
 
