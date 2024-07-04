@@ -2,6 +2,8 @@
 
 Source: https://github.com/multi-io/docker-delve
 
+Image: https://hub.docker.com/r/oklischat/delve
+
 Usually run with the binary to be debugged mounted into the container. You could
 also copy the dlv binary (which is linked statically) out of the container into
 the to-be-debugged container, e.g. if you use this image in a K8s
@@ -28,3 +30,6 @@ docker run --security-opt seccomp:unconfined -v `pwd`/output:/output -p 2345:234
 You should now be able to connect any debugging client running on the
 host (e.g delve itself, or an IDE like Goland) to the debugged process
 at `localhost:2345`.
+
+The images are multi-arch, currently linux/amd64 and linux/arm64. Docker will
+automatically choose the one matching the local system.
