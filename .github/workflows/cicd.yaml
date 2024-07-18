@@ -1,7 +1,9 @@
 name: Publish docker image
 on:
   push:
-    branches: master
+    branches:
+      - master
+      - multiversion
 jobs:
 
   publish:
